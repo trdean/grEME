@@ -73,7 +73,17 @@ namespace gr {
         int *out = (int *) output_items[0];
 
         // Do <+signal processing+>:
-	
+	int err_index;
+	int err_pos[50];
+	int rec_flip[63];
+	for (int i = 0; i < noutput_items; i++) {
+		for (int k = 0; k < 12; k++) rec_flip[k] = in[i].data[62-k];
+		for (int k = 0; k < 51; k++) rec_flip[12+k] = in[i].data[50-k];
+
+		decode_rs_int_work(rs, rec_flip, err_pos, err_index);
+
+		for (int k = 0; k < 12; k++) out[i].data[k] = rec_flip[11-k]
+	}
 	
         // Tell runtime system how many input items we consumed on
         // each input stream.
