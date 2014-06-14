@@ -2,7 +2,7 @@
 
 #include <string.h>
 #include <stdio.h>
-#include "strpack.h"
+#include "packmsg.h"
 #include "checkmsg.h"
 #include "getpfx1.h"
 
@@ -19,7 +19,7 @@ main()
   fgets(msg, 22, stdin);
   printf("Message to encode is: \n%s", msg);
   checkmsg(msg, cok, nspecial, flip, debug);
-  strpack(msg);
+  packmsg(msg, dgen);
   printf("Status:\n Message: %s\n COK: %s\n NSPECIAL: %d\n Flip: %f\n", msg, cok, nspecial, flip);
   printf("Completed");
 }

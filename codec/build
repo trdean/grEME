@@ -1,1 +1,1 @@
-gcc -o encode encode.c checkmsg.c strpack.c getpfx1.h
+gcc -o encode encode65.c checkmsg.c packmsg.c getpfx1.c
