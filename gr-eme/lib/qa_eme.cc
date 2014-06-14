@@ -31,6 +31,8 @@
 #include "qa_graycode_ii.h"
 #include "qa_fsk_modulate_if.h"
 #include "qa_add_sync_ii.h"
+#include "qa_deinterleave_ii.h"
+#include "qa_ungraycode_ii.h"
 
 CppUnit::TestSuite *
 qa_eme::suite()
@@ -41,6 +43,8 @@ qa_eme::suite()
   s->addTest(gr::eme::qa_graycode_ii::suite());
   s->addTest(gr::eme::qa_fsk_modulate_if::suite());
   s->addTest(gr::eme::qa_add_sync_ii::suite());
+  s->addTest(gr::eme::qa_deinterleave_ii::suite());
+  s->addTest(gr::eme::qa_ungraycode_ii::suite());
 
   return s;
 }

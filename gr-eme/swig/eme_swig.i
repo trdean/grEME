@@ -15,6 +15,8 @@
 #include "eme/graycode_ii.h"
 #include "eme/fsk_modulate_if.h"
 #include "eme/add_sync_ii.h"
+#include "eme/deinterleave_ii.h"
+#include "eme/ungraycode_ii.h"
 %}
 
 
@@ -32,3 +34,7 @@ GR_SWIG_BLOCK_MAGIC2(eme, graycode_ii);
 GR_SWIG_BLOCK_MAGIC2(eme, fsk_modulate_if);
 %include "eme/add_sync_ii.h"
 GR_SWIG_BLOCK_MAGIC2(eme, add_sync_ii);
+%include "eme/deinterleave_ii.h"
+GR_SWIG_BLOCK_MAGIC2(eme, deinterleave_ii);
+%include "eme/ungraycode_ii.h"
+GR_SWIG_BLOCK_MAGIC2(eme, ungraycode_ii);

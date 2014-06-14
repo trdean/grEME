@@ -28,5 +28,7 @@ install(FILES
     interleave_ii.h
     graycode_ii.h
     fsk_modulate_if.h
-    add_sync_ii.h DESTINATION include/eme
+    add_sync_ii.h
+    deinterleave_ii.h
+    ungraycode_ii.h DESTINATION include/eme
 )

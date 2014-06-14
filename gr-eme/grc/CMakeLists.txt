@@ -24,5 +24,7 @@ install(FILES
     eme_interleave_ii.xml
     eme_graycode_ii.xml
     eme_fsk_modulate_if.xml
-    eme_add_sync_ii.xml DESTINATION share/gnuradio/grc/blocks
+    eme_add_sync_ii.xml
+    eme_deinterleave_ii.xml
+    eme_ungraycode_ii.xml DESTINATION share/gnuradio/grc/blocks
 )
