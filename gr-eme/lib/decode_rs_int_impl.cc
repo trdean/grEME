@@ -42,13 +42,12 @@ namespace gr {
     /*
      * The private constructor
      */
-    decode_rs_int_impl::decode_rs_int_impl(unsigned int symsize,unsigned int gfpoly,unsigned fcr,unsigned prim,
-		unsigned int nroots)
+    decode_rs_int_impl::decode_rs_int_impl()
       : gr::block("decode_rs_int",
-              gr::io_signature::make(((1<<symsize)-1), ((1<<symsize)-1), sizeof(int)),
-              gr::io_signature::make(((1<<symsize)-nroots-1), ((1<<symsize)-nroots-1), sizeof(int)))
+              gr::io_signature::make(1, 1, sizeof(eme_packet_rs_encoded)),
+              gr::io_signature::make(1, 1, sizeof(eme_packet_no_rs)))
     {
-      rs = init_rs_int(symsize,gfpoly,fcr,prim,nroots); 
+      rs = init_rs_int(6, 0x43, 3, 1, 51); 
     }
 
     /*
@@ -61,7 +60,7 @@ namespace gr {
     void
     decode_rs_int_impl::forecast (int noutput_items, gr_vector_int &ninput_items_required)
     {
-        /* <+forecast+> e.g. ninput_items_required[0] = noutput_items */
+        ninput_items_required[0] = noutput_items;
     }
 
     int
@@ -73,7 +72,9 @@ namespace gr {
         const int *in = (const int *) input_items[0];
         int *out = (int *) output_items[0];
 
-        // Do <+signal processing+>
+        // Do <+signal processing+>:
+	
+	
         // Tell runtime system how many input items we consumed on
         // each input stream.
         consume_each (noutput_items);

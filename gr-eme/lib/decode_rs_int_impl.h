@@ -32,7 +32,7 @@ namespace gr {
       // Nothing to declare in this block.
 
      public:
-      decode_rs_int_impl(unsigned int symsize,unsigned int gfpoly,unsigned fcr,unsigned prim,unsigned int nroots);
+      decode_rs_int_impl();
       ~decode_rs_int_impl();
 
       // Where all the action really happens
