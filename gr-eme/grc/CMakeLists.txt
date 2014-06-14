@@ -18,5 +18,11 @@
 # Boston, MA 02110-1301, USA.
 
 install(FILES
-    eme_source_code_ss.xml DESTINATION share/gnuradio/grc/blocks
+    eme_source_code_ss.xml
+    eme_encode_rs_int.xml
+    eme_decode_rs_int.xml
+    eme_interleave_ii.xml
+    eme_graycode_ii.xml
+    eme_fsk_modulate_if.xml
+    eme_add_sync_ii.xml DESTINATION share/gnuradio/grc/blocks
 )

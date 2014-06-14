@@ -23,50 +23,73 @@
 #endif
 
 #include <gnuradio/io_signature.h>
-#include "source_code_ss_impl.h"
+#include "encode_rs_int_impl.h"
+#include "reed-solomon/rs.h"
 
 namespace gr {
   namespace eme {
 
-    source_code_ss::sptr
-    source_code_ss::make()
+   static void *rs; //pointer to encoder in Karn library
+
+    encode_rs_int::sptr
+    encode_rs_int::make()
     {
       return gnuradio::get_initial_sptr
-        (new source_code_ss_impl());
+        (new encode_rs_int_impl());
     }
 
     /*
      * The private constructor
      */
-    source_code_ss_impl::source_code_ss_impl()
-      : gr::block("source_code_ss",
-              gr::io_signature::make(1, 1, sizeof(int)),
-              gr::io_signature::make(1, 1, sizeof(int)))
-    {}
+    encode_rs_int_impl::encode_rs_int_impl()
+      : gr::block("encode_rs_int",
+              gr::io_signature::make( 1, 1, sizeof(eme_packet_no_rs)),
+              gr::io_signature::make( 1, 1, sizeof(eme_packet_rs_encoded)))
+    { 
+      rs = init_rs_int(6, 0x43, 3, 1, 51); 
+    }
+    
 
     /*
      * Our virtual destructor.
      */
-    source_code_ss_impl::~source_code_ss_impl()
+    encode_rs_int_impl::~encode_rs_int_impl()
     {
+      if(rs)
+        free_rs_int(rs);
     }
 
     void
-    source_code_ss_impl::forecast (int noutput_items, gr_vector_int &ninput_items_required)
+    encode_rs_int_impl::forecast (int noutput_items, gr_vector_int &ninput_items_required)
     {
-        /* <+forecast+> e.g. ninput_items_required[0] = noutput_items */
+        ninput_items_required[0] = noutput_items;
     }
 
     int
-    source_code_ss_impl::general_work (int noutput_items,
+    encode_rs_int_impl::general_work (int noutput_items,
                        gr_vector_int &ninput_items,
                        gr_vector_const_void_star &input_items,
                        gr_vector_void_star &output_items)
     {
-        const int *in = (const int *) input_items[0];
-        int *out = (int *) output_items[0];
+        const eme_packet_no_rs *in = (const eme_packet_no_rs *) input_items[0];
+        eme_packet_rs_encoded *out = (eme_packet_rs_encoded *) output_items[0];
 
         // Do <+signal processing+>
+        int raw_parity[51];
+        int tmp_data[12];
+	for(int i = 0; i < noutput_items; i++) {
+
+          // Reverse data order because ???
+          for(int j=0; j<12; j++) {
+            tmp_data[j]=in[i].data[11-j];
+          }    
+  
+          encode_rs_int_work(rs, tmp_data, raw_parity); 
+
+          // Move parity symbols and data into output - backwards because ???
+          for (int j = 0; j < 51; j++) out[i].data[50-j] = raw_parity[j];
+          for (int j = 0; j < 12; j++) out[i].data[j+51] = tmp_data[11-j];
+        }
         // Tell runtime system how many input items we consumed on
         // each input stream.
         consume_each (noutput_items);

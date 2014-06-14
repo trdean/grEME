@@ -23,50 +23,69 @@
 #endif
 
 #include <gnuradio/io_signature.h>
-#include "source_code_ss_impl.h"
+#include <eme/types.h>
+#include "graycode_ii_impl.h"
 
 namespace gr {
   namespace eme {
 
-    source_code_ss::sptr
-    source_code_ss::make()
+    graycode_ii::sptr
+    graycode_ii::make()
     {
       return gnuradio::get_initial_sptr
-        (new source_code_ss_impl());
+        (new graycode_ii_impl());
     }
 
     /*
      * The private constructor
      */
-    source_code_ss_impl::source_code_ss_impl()
-      : gr::block("source_code_ss",
-              gr::io_signature::make(1, 1, sizeof(int)),
-              gr::io_signature::make(1, 1, sizeof(int)))
+    graycode_ii_impl::graycode_ii_impl()
+      : gr::block("graycode_ii",
+              gr::io_signature::make(1, 1, sizeof(eme_packet_rs_encoded)),
+              gr::io_signature::make(1, 1, sizeof(eme_packet_rs_encoded)))
     {}
 
     /*
      * Our virtual destructor.
      */
-    source_code_ss_impl::~source_code_ss_impl()
+    graycode_ii_impl::~graycode_ii_impl()
     {
     }
 
     void
-    source_code_ss_impl::forecast (int noutput_items, gr_vector_int &ninput_items_required)
+    graycode_ii_impl::forecast (int noutput_items, gr_vector_int &ninput_items_required)
     {
         /* <+forecast+> e.g. ninput_items_required[0] = noutput_items */
     }
 
     int
-    source_code_ss_impl::general_work (int noutput_items,
+    graycode_ii_impl::general_work (int noutput_items,
                        gr_vector_int &ninput_items,
                        gr_vector_const_void_star &input_items,
                        gr_vector_void_star &output_items)
     {
-        const int *in = (const int *) input_items[0];
-        int *out = (int *) output_items[0];
+        const eme_packet_rs_encoded *in = (const eme_packet_rs_encoded *) input_items[0];
+        eme_packet_rs_encoded *out = (eme_packet_rs_encoded *) output_items[0];
 
         // Do <+signal processing+>
+	int symbol;
+	unsigned long shift;
+	unsigned long tmp;
+	for(int i = 0; i < noutput_items; i++) {
+		for(int j = 0; j < 63; j++) {
+			symbol = in[i].data[j];
+
+			shift = 1;
+			tmp = (symbol >> shift);
+			while (tmp > 0) {
+				symbol ^= tmp;
+				shift = shift << 1;
+				tmp = symbol >> shift;
+			}
+			
+			out[i].data[j] = symbol;
+		}
+	}
         // Tell runtime system how many input items we consumed on
         // each input stream.
         consume_each (noutput_items);

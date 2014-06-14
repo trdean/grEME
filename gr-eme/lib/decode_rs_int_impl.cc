@@ -23,42 +23,49 @@
 #endif
 
 #include <gnuradio/io_signature.h>
-#include "source_code_ss_impl.h"
+#include "decode_rs_int_impl.h"
+#include "reed-solomon/rs.h"
 
 namespace gr {
   namespace eme {
 
-    source_code_ss::sptr
-    source_code_ss::make()
+    static void *rs; //pointer to encoder in Karn library
+
+    decode_rs_int::sptr
+    decode_rs_int::make(unsigned int symsize,unsigned int gfpoly,unsigned fcr,unsigned prim,
+		unsigned int nroots)
     {
       return gnuradio::get_initial_sptr
-        (new source_code_ss_impl());
+        (new decode_rs_int_impl(symsize, gfpoly, fcr, prim, nroots));
     }
 
     /*
      * The private constructor
      */
-    source_code_ss_impl::source_code_ss_impl()
-      : gr::block("source_code_ss",
-              gr::io_signature::make(1, 1, sizeof(int)),
-              gr::io_signature::make(1, 1, sizeof(int)))
-    {}
+    decode_rs_int_impl::decode_rs_int_impl(unsigned int symsize,unsigned int gfpoly,unsigned fcr,unsigned prim,
+		unsigned int nroots)
+      : gr::block("decode_rs_int",
+              gr::io_signature::make(((1<<symsize)-1), ((1<<symsize)-1), sizeof(int)),
+              gr::io_signature::make(((1<<symsize)-nroots-1), ((1<<symsize)-nroots-1), sizeof(int)))
+    {
+      rs = init_rs_int(symsize,gfpoly,fcr,prim,nroots); 
+    }
 
     /*
      * Our virtual destructor.
      */
-    source_code_ss_impl::~source_code_ss_impl()
+    decode_rs_int_impl::~decode_rs_int_impl()
     {
     }
 
     void
-    source_code_ss_impl::forecast (int noutput_items, gr_vector_int &ninput_items_required)
+    decode_rs_int_impl::forecast (int noutput_items, gr_vector_int &ninput_items_required)
     {
         /* <+forecast+> e.g. ninput_items_required[0] = noutput_items */
     }
 
     int
-    source_code_ss_impl::general_work (int noutput_items,
+    decode_rs_int_impl::general_work (int noutput_items,
                        gr_vector_int &ninput_items,
                        gr_vector_const_void_star &input_items,
                        gr_vector_void_star &output_items)
