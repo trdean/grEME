@@ -22,5 +22,11 @@
 ########################################################################
 install(FILES
     api.h
-    source_code_ss.h DESTINATION include/eme
+    source_code_ss.h
+    encode_rs_int.h
+    decode_rs_int.h
+    interleave_ii.h
+    graycode_ii.h
+    fsk_modulate_if.h
+    add_sync_ii.h DESTINATION include/eme
 )

@@ -23,50 +23,75 @@
 #endif
 
 #include <gnuradio/io_signature.h>
-#include "source_code_ss_impl.h"
+#include <eme/types.h>
+#include <math.h>
+#include "fsk_modulate_if_impl.h"
+#define PI 3.14159265
 
 namespace gr {
   namespace eme {
 
-    source_code_ss::sptr
-    source_code_ss::make()
+    fsk_modulate_if::sptr
+    fsk_modulate_if::make()
     {
       return gnuradio::get_initial_sptr
-        (new source_code_ss_impl());
+        (new fsk_modulate_if_impl());
     }
 
     /*
      * The private constructor
      */
-    source_code_ss_impl::source_code_ss_impl()
-      : gr::block("source_code_ss",
-              gr::io_signature::make(1, 1, sizeof(int)),
-              gr::io_signature::make(1, 1, sizeof(int)))
+    fsk_modulate_if_impl::fsk_modulate_if_impl()
+      : gr::block("fsk_modulate_if",
+              gr::io_signature::make(1, 1, sizeof(eme_packet_with_sync)),
+              gr::io_signature::make(4096*126, 4096*126, sizeof(float)))  //63 symbols per packet * 4096 samples per symbol
     {}
 
     /*
      * Our virtual destructor.
      */
-    source_code_ss_impl::~source_code_ss_impl()
+    fsk_modulate_if_impl::~fsk_modulate_if_impl()
     {
     }
 
     void
-    source_code_ss_impl::forecast (int noutput_items, gr_vector_int &ninput_items_required)
+    fsk_modulate_if_impl::forecast (int noutput_items, gr_vector_int &ninput_items_required)
     {
-        /* <+forecast+> e.g. ninput_items_required[0] = noutput_items */
+        ninput_items_required[0] = noutput_items / (4096*126);  //This is probably not going to work
     }
 
     int
-    source_code_ss_impl::general_work (int noutput_items,
+    fsk_modulate_if_impl::general_work (int noutput_items,
                        gr_vector_int &ninput_items,
                        gr_vector_const_void_star &input_items,
                        gr_vector_void_star &output_items)
     {
-        const int *in = (const int *) input_items[0];
-        int *out = (int *) output_items[0];
+        const eme_packet_rs_encoded *in = (const eme_packet_rs_encoded *) input_items[0];
+        float *out = (float *) output_items[0];
 
         // Do <+signal processing+>
+	int symbol_index;
+	int input_index;
+	float phase;
+	float freq;
+	float sample_rate = 11025;
+	for( int i = 0; i < noutput_items; i++ ) {
+		symbol_index = i / 2048;
+		if (symbol_index > 125) {
+			symbol_index = (symbol_index / 2) + 126;
+		}
+		input_index = i / (4096*126);
+		if ( in[ input_index ].data[symbol_index] == 0 ) {
+			out[i] = 0;
+		} else {
+			while ( phase > 2*PI ) {
+				phase -= 2*PI;
+			}
+			freq = (1270.5 + 2.6917 * in[ input_index ].data[symbol_index]);
+			phase += 2 * PI * freq / sample_rate;
+			out[i] = sin (phase);
+		}
+	}
         // Tell runtime system how many input items we consumed on
         // each input stream.
         consume_each (noutput_items);

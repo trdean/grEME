@@ -27,12 +27,20 @@
 
 #include "qa_eme.h"
 #include "qa_source_code_ss.h"
+#include "qa_interleave_ii.h"
+#include "qa_graycode_ii.h"
+#include "qa_fsk_modulate_if.h"
+#include "qa_add_sync_ii.h"
 
 CppUnit::TestSuite *
 qa_eme::suite()
 {
   CppUnit::TestSuite *s = new CppUnit::TestSuite("eme");
   s->addTest(gr::eme::qa_source_code_ss::suite());
+  s->addTest(gr::eme::qa_interleave_ii::suite());
+  s->addTest(gr::eme::qa_graycode_ii::suite());
+  s->addTest(gr::eme::qa_fsk_modulate_if::suite());
+  s->addTest(gr::eme::qa_add_sync_ii::suite());
 
   return s;
 }

@@ -27,6 +27,10 @@ link_directories(${Boost_LIBRARY_DIRS})
 
 list(APPEND eme_sources
     source_code_ss_impl.cc
+    interleave_ii_impl.cc
+    graycode_ii_impl.cc
+    fsk_modulate_if_impl.cc
+    add_sync_ii_impl.cc
 )
 
 add_library(gnuradio-eme SHARED ${eme_sources})
@@ -52,6 +56,10 @@ include_directories(${CPPUNIT_INCLUDE_DIRS})
 list(APPEND test_eme_sources
     ${CMAKE_CURRENT_SOURCE_DIR}/test_eme.cc
     ${CMAKE_CURRENT_SOURCE_DIR}/qa_eme.cc
+    ${CMAKE_CURRENT_SOURCE_DIR}/qa_add_sync_ii.cc
+    ${CMAKE_CURRENT_SOURCE_DIR}/qa_fsk_modulate_if.cc
+    ${CMAKE_CURRENT_SOURCE_DIR}/qa_graycode_ii.cc
+    ${CMAKE_CURRENT_SOURCE_DIR}/qa_interleave_ii.cc
     ${CMAKE_CURRENT_SOURCE_DIR}/qa_source_code_ss.cc
 )
 
