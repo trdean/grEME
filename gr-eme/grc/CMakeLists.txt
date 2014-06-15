@@ -16,7 +16,6 @@
 # along with GNU Radio; see the file COPYING.  If not, write to
 # the Free Software Foundation, Inc., 51 Franklin Street,
 # Boston, MA 02110-1301, USA.
-
 install(FILES
     eme_source_code_ss.xml
     eme_encode_rs_int.xml
@@ -26,5 +25,8 @@ install(FILES
     eme_fsk_modulate_if.xml
     eme_add_sync_ii.xml
     eme_deinterleave_ii.xml
-    eme_ungraycode_ii.xml DESTINATION share/gnuradio/grc/blocks
+    eme_ungraycode_ii.xml
+    eme_packet_no_rs_source.xml
+    eme_packet_rs_source.xml
+    DESTINATION share/gnuradio/grc/blocks
 )

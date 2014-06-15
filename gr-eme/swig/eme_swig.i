@@ -17,6 +17,8 @@
 #include "eme/add_sync_ii.h"
 #include "eme/deinterleave_ii.h"
 #include "eme/ungraycode_ii.h"
+#include "eme/packet_no_rs_source.h"
+#include "eme/packet_rs_source.h"
 %}
 
 
@@ -38,3 +40,9 @@ GR_SWIG_BLOCK_MAGIC2(eme, add_sync_ii);
 GR_SWIG_BLOCK_MAGIC2(eme, deinterleave_ii);
 %include "eme/ungraycode_ii.h"
 GR_SWIG_BLOCK_MAGIC2(eme, ungraycode_ii);
+%include "eme/packet_no_rs_source.h"
+GR_SWIG_BLOCK_MAGIC2(eme, packet_no_rs_source);
+%include "eme/packet_rs_source.h"
+GR_SWIG_BLOCK_MAGIC2(eme, packet_rs_source);
+
+

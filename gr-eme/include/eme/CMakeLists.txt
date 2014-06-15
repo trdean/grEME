@@ -30,5 +30,8 @@ install(FILES
     fsk_modulate_if.h
     add_sync_ii.h
     deinterleave_ii.h
-    ungraycode_ii.h DESTINATION include/eme
+    ungraycode_ii.h
+    packet_no_rs_source.h
+    packet_rs_source.h
+    DESTINATION include/eme
 )

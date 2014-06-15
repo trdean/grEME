@@ -24,7 +24,6 @@ include(GrPlatform) #define LIB_SUFFIX
 
 include_directories(${Boost_INCLUDE_DIR})
 link_directories(${Boost_LIBRARY_DIRS})
-
 list(APPEND eme_sources
     source_code_ss_impl.cc
     interleave_ii_impl.cc
@@ -33,7 +32,9 @@ list(APPEND eme_sources
     add_sync_ii_impl.cc
     deinterleave_ii_impl.cc
     ungraycode_ii_impl.cc
-)
+    packet_no_rs_source_impl.cc
+    packet_rs_source_impl.cc
+    )
 
 add_library(gnuradio-eme SHARED ${eme_sources})
 target_link_libraries(gnuradio-eme ${Boost_LIBRARIES} ${GNURADIO_RUNTIME_LIBRARIES})
