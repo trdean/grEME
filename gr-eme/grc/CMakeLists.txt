@@ -28,5 +28,6 @@ install(FILES
     eme_ungraycode_ii.xml
     eme_packet_no_rs_source.xml
     eme_packet_rs_source.xml
-    DESTINATION share/gnuradio/grc/blocks
+    eme_packet_no_rs_sink.xml
+    eme_packet_rs_sink.xml DESTINATION share/gnuradio/grc/blocks
 )

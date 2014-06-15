@@ -34,7 +34,8 @@ list(APPEND eme_sources
     ungraycode_ii_impl.cc
     packet_no_rs_source_impl.cc
     packet_rs_source_impl.cc
-    )
+    packet_no_rs_sink_impl.cc
+    packet_rs_sink_impl.cc )
 
 add_library(gnuradio-eme SHARED ${eme_sources})
 target_link_libraries(gnuradio-eme ${Boost_LIBRARIES} ${GNURADIO_RUNTIME_LIBRARIES})

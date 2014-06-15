@@ -19,6 +19,8 @@
 #include "eme/ungraycode_ii.h"
 #include "eme/packet_no_rs_source.h"
 #include "eme/packet_rs_source.h"
+#include "eme/packet_no_rs_sink.h"
+#include "eme/packet_rs_sink.h"
 %}
 
 
@@ -46,3 +48,7 @@ GR_SWIG_BLOCK_MAGIC2(eme, packet_no_rs_source);
 GR_SWIG_BLOCK_MAGIC2(eme, packet_rs_source);
 
 
+%include "eme/packet_no_rs_sink.h"
+GR_SWIG_BLOCK_MAGIC2(eme, packet_no_rs_sink);
+%include "eme/packet_rs_sink.h"
+GR_SWIG_BLOCK_MAGIC2(eme, packet_rs_sink);

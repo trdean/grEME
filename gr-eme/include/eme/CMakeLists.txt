@@ -33,5 +33,6 @@ install(FILES
     ungraycode_ii.h
     packet_no_rs_source.h
     packet_rs_source.h
-    DESTINATION include/eme
+    packet_no_rs_sink.h
+    packet_rs_sink.h DESTINATION include/eme
 )
