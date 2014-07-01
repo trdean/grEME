@@ -29,11 +29,7 @@ namespace gr {
     class encode_rs_int_impl : public encode_rs_int
     {
      private:
-      void encode_rs_int_work(void *p, int *data, int *bb);
-      void *init_rs_int(unsigned int symsize, unsigned int gfpoly, unsigned fcr,
-                  unsigned prim, unsigned int nroots);
-      void free_rs_int(void *p);
-
+	//None?
      public:
       encode_rs_int_impl();
       ~encode_rs_int_impl();
@@ -45,6 +41,12 @@ namespace gr {
 		       gr_vector_int &ninput_items,
 		       gr_vector_const_void_star &input_items,
 		       gr_vector_void_star &output_items);
+
+      void encode_rs_int_work(void *p, int *data, int *bb);
+      void *init_rs_int(unsigned int symsize, unsigned int gfpoly, unsigned fcr,
+                  unsigned prim, unsigned int nroots);
+      void free_rs_int(void *p);
+
     };
 
    struct rs {

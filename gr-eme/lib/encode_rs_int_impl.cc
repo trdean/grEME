@@ -99,7 +99,7 @@ namespace gr {
 
     //Reed-Solomon stuff
     void
-    encode_rs_int_work(void *p, int *data, int *bb) 
+    encode_rs_int_impl::encode_rs_int_work(void *p, int *data, int *bb) 
     {
       struct rs *rs = (struct rs *)p;
 
@@ -130,7 +130,7 @@ namespace gr {
     }
 
     void *
-    init_rs_int(unsigned int symsize, unsigned int gfpoly, unsigned fcr,
+    encode_rs_int_impl::init_rs_int(unsigned int symsize, unsigned int gfpoly, unsigned fcr,
                   unsigned prim, unsigned int nroots) 
     {
       struct rs *rs;
@@ -223,7 +223,7 @@ namespace gr {
     }
 
     void 
-    free_rs_int(void *p) {
+    encode_rs_int_impl::free_rs_int(void *p) {
       struct rs *rs = (struct rs *)p;
 
       free(rs->alpha_to);

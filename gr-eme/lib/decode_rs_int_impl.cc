@@ -49,7 +49,7 @@ namespace gr {
               gr::io_signature::make(1, 1, sizeof(eme_packet_rs_encoded)),
               gr::io_signature::make(1, 1, sizeof(eme_packet_no_rs)))
     {
-      rs = init_rs_int(6, 0x43, 3, 1, 51); 
+      rs = init_rs_int_d(6, 0x43, 3, 1, 51); 
     }
 
     /*
@@ -95,7 +95,8 @@ namespace gr {
         return noutput_items;
     }
 
-int decode_rs_int_work(void *p, int *data, int *eras_pos, int no_eras){
+int 
+decode_rs_int_impl::decode_rs_int_work(void *p, int *data, int *eras_pos, int no_eras){
   struct rs *rs = (struct rs *)p;
   int deg_lambda, el, deg_omega;
   int i, j, r, k;
@@ -338,7 +339,7 @@ int decode_rs_int_work(void *p, int *data, int *eras_pos, int no_eras){
 }    
 
     void *
-    init_rs_int_d(unsigned int symsize, unsigned int gfpoly, unsigned fcr,
+    decode_rs_int_impl::init_rs_int_d(unsigned int symsize, unsigned int gfpoly, unsigned fcr,
                   unsigned prim, unsigned int nroots) 
     {
       struct rs *rs;
@@ -431,7 +432,7 @@ int decode_rs_int_work(void *p, int *data, int *eras_pos, int no_eras){
     }
 
     void 
-    free_rs_int_d(void *p) {
+    decode_rs_int_impl::free_rs_int_d(void *p) {
       struct rs *rs = (struct rs *)p;
 
       free(rs->alpha_to);

@@ -47,6 +47,12 @@ namespace gr {
        * creating new instances.
        */
       static sptr make();
+
+      virtual int decode_rs_int_work( void *p, int *data, int *eras_pos, int no_eras) = 0;
+      virtual void *init_rs_int_d(unsigned int symsize, unsigned int gfpoly, unsigned fcr,
+                  unsigned prim, unsigned int nroots) = 0;
+      virtual void free_rs_int_d(void *p) = 0;
+
     };
 
   } // namespace eme
