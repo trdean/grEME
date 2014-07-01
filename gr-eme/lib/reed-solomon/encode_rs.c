@@ -4,13 +4,7 @@
  */
 #include <string.h>
 
-#ifdef FIXED
-#include "fixed.h"
-#elif defined(BIGSYM)
 #include "int.h"
-#else
-#include "char.h"
-#endif
 
 void ENCODE_RS(
 #ifndef FIXED

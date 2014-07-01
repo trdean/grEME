@@ -29,7 +29,10 @@ namespace gr {
     class encode_rs_int_impl : public encode_rs_int
     {
      private:
-      // Nothing to declare in this block.
+      void encode_rs_int_work(void *p, int *data, int *bb);
+      void *init_rs_int(unsigned int symsize, unsigned int gfpoly, unsigned fcr,
+                  unsigned prim, unsigned int nroots);
+      void free_rs_int(void *p);
 
      public:
       encode_rs_int_impl();
@@ -44,8 +47,41 @@ namespace gr {
 		       gr_vector_void_star &output_items);
     };
 
+   struct rs {
+     unsigned int mm;   /* Bits per symbol */
+     unsigned int nn;   /* Symbols per block (= (1<<mm)-1) */
+     int *alpha_to;      /* log lookup table */
+     int *index_of;      /* Antilog lookup table */
+     int *genpoly;       /* Generator polynomial */
+     unsigned int nroots;     /* Number of generator roots = number of parity symbols */
+     unsigned int fcr;        /* First consecutive root, index form */
+     unsigned int prim;       /* Primitive element, index form */
+     unsigned int iprim;      /* prim-th root of 1, index form */
+   };
+
+   static inline int modnn(struct rs *rs, int x) {
+     while (x >= rs->nn) {
+       x -= rs->nn;
+       x = (x >> rs->mm) + (x & rs->nn);
+     }
+     return x;
+   }
+
   } // namespace eme
 } // namespace gr
+
+#define MODNN(x) modnn(rs,x)
+
+#define MM (rs->mm)
+#define NN (rs->nn)
+#define ALPHA_TO (rs->alpha_to)
+#define INDEX_OF (rs->index_of)
+#define GENPOLY (rs->genpoly)
+#define NROOTS (rs->nroots)
+#define FCR (rs->fcr)
+#define PRIM (rs->prim)
+#define IPRIM (rs->iprim)
+#define A0 (NN)
 
 #endif /* INCLUDED_EME_ENCODE_RS_INT_IMPL_H */
 

@@ -46,7 +46,7 @@ namespace gr {
        * class. eme::decode_rs_int::make is the public interface for
        * creating new instances.
        */
-      static sptr make(unsigned int symsize,unsigned int gfpoly,unsigned fcr,unsigned prim,unsigned int nroots);
+      static sptr make();
     };
 
   } // namespace eme

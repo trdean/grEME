@@ -12,13 +12,7 @@
 #define NULL ((void *)0)
 #define	min(a,b)	((a) < (b) ? (a) : (b))
 
-#ifdef FIXED
-#include "fixed.h"
-#elif defined(BIGSYM)
 #include "int.h"
-#else
-#include "char.h"
-#endif
 
 int DECODE_RS(
 #ifndef FIXED

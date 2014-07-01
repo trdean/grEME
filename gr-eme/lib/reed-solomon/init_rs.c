@@ -5,17 +5,13 @@
  */
 #include <stdlib.h>
 
-#ifdef CCSDS
-#include "ccsds.h"
-#elif defined(BIGSYM)
 #include "int.h"
-#else
-#include "char.h"
-#endif
 
 #define NULL ((void *)0)
 
-void FREE_RS(void *p){
+void 
+__attribute__ ((visibility("default")))
+FREE_RS(void *p){
   struct rs *rs = (struct rs *)p;
 
   free(rs->alpha_to);

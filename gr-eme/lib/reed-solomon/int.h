@@ -49,7 +49,11 @@ FEC_API void ENCODE_RS(void *p,DTYPE *data,DTYPE *parity);
 FEC_API int DECODE_RS(void *p,DTYPE *data,int *eras_pos,int no_eras);
 void *INIT_RS(unsigned int symsize,unsigned int gfpoly,unsigned int fcr,
 		   unsigned int prim,unsigned int nroots);
-FEC_API void FREE_RS(void *p);
+FEC_API void 
+#if __GNUC__ >= 4
+__attribute__ ((visibility("default")))
+#endif
+FREE_RS(void *p);
 
 
 
