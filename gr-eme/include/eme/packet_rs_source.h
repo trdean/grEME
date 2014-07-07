@@ -46,7 +46,7 @@ namespace gr {
        * class. eme::packet_rs_source::make is the public interface for
        * creating new instances.
        */
-      static sptr make(int *data, bool repeat);
+      static sptr make(std::vector <int> data, bool repeat);
     };
 
   } // namespace eme

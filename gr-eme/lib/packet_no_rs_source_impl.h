@@ -34,7 +34,7 @@ namespace gr {
       bool d_repeat;
 
      public:
-      packet_no_rs_source_impl(int *data, bool repeat);
+      packet_no_rs_source_impl(std::vector <int> data, bool repeat);
       ~packet_no_rs_source_impl();
 
       // Where all the action really happens

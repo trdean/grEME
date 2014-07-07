@@ -30,7 +30,7 @@ namespace gr {
   namespace eme {
 
     packet_rs_source::sptr
-    packet_rs_source::make(int *data, bool repeat)
+    packet_rs_source::make(std::vector <int> data, bool repeat)
     {
       return gnuradio::get_initial_sptr
         (new packet_rs_source_impl(data, repeat));
@@ -39,7 +39,7 @@ namespace gr {
     /*
      * The private constructor
      */
-    packet_rs_source_impl::packet_rs_source_impl(int *data, bool repeat)
+    packet_rs_source_impl::packet_rs_source_impl(std::vector <int> data, bool repeat)
       : gr::block("packet_rs_source",
               gr::io_signature::make(0, 0, 0),
               gr::io_signature::make(1, 1, sizeof(eme_packet_rs_encoded)))
