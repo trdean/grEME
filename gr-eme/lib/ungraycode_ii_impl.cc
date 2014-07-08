@@ -68,9 +68,22 @@ namespace gr {
         eme_packet_rs_encoded *out = (eme_packet_rs_encoded *) output_items[0];
 
         // Do <+signal processing+>
-	for( int i = 0; i < noutput_items; i++) {
-		for( int j = 0; j < 63; j++) {
-			out[i].data[j] = in[i].data[j] ^ (in[i].data[j] >> 1);
+	int symbol;
+	unsigned long shift;
+	unsigned long tmp;
+	for(int i = 0; i < noutput_items; i++) {
+		for(int j = 0; j < 63; j++) {
+			symbol = in[i].data[j];
+
+			shift = 1;
+			tmp = (symbol >> shift);
+			while (tmp > 0) {
+				symbol ^= tmp;
+				shift = shift << 1;
+				tmp = symbol >> shift;
+			}
+			
+			out[i].data[j] = symbol;
 		}
 	}
         // Tell runtime system how many input items we consumed on
