@@ -69,8 +69,8 @@ namespace gr {
 
         // Do <+signal processing+>
 	for (int i = 0; i < noutput_items; i++) {
-		for (int j = 0; j < 7; j++) {
-			for (int k = 0; k < 9; k++) {
+		for (int j = 0; j < 9; j++) {
+			for (int k = 0; k < 7; k++) {
 				out[i].data[7*j+k] = in[i].data[9*k+j];
 			}
 		}
