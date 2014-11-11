@@ -40,9 +40,11 @@ namespace gr {
      */
     rs_encode_cc_impl::rs_encode_cc_impl()
       : gr::block("rs_encode_cc",
-              gr::io_signature::make(<+MIN_IN+>, <+MAX_IN+>, sizeof(<+ITYPE+>)),
-              gr::io_signature::make(<+MIN_OUT+>, <+MAX_OUT+>, sizeof(<+OTYPE+>)))
-    {}
+              gr::io_signature::make(1, 1, 12*sizeof(char)),
+              gr::io_signature::make(1, 1, 63*sizeof(char)))
+    {
+        set_output_multiple(63);
+    }
 
     /*
      * Our virtual destructor.
@@ -55,6 +57,7 @@ namespace gr {
     rs_encode_cc_impl::forecast (int noutput_items, gr_vector_int &ninput_items_required)
     {
         /* <+forecast+> e.g. ninput_items_required[0] = noutput_items */
+        ninput_items_required[0] = 12 * noutput_items / 63;
     }
 
     int
@@ -63,8 +66,8 @@ namespace gr {
                        gr_vector_const_void_star &input_items,
                        gr_vector_void_star &output_items)
     {
-        const <+ITYPE*> *in = (const <+ITYPE*> *) input_items[0];
-        <+OTYPE*> *out = (<+OTYPE*> *) output_items[0];
+        const char *in = (const char *) input_items[0];
+        char *out = (char *) output_items[0];
 
         // Do <+signal processing+>
         // Tell runtime system how many input items we consumed on

@@ -40,8 +40,8 @@ namespace gr {
      */
     graycode_impl::graycode_impl(int direction)
       : gr::sync_block("graycode",
-              gr::io_signature::make(<+MIN_IN+>, <+MAX_IN+>, sizeof(<+ITYPE+>)),
-              gr::io_signature::make(<+MIN_OUT+>, <+MAX_OUT+>, sizeof(<+OTYPE+>)))
+              gr::io_signature::make(1, 1, sizeof(char)),
+              gr::io_signature::make(1, 1, sizeof(char)))
     {}
 
     /*
@@ -56,8 +56,8 @@ namespace gr {
 			  gr_vector_const_void_star &input_items,
 			  gr_vector_void_star &output_items)
     {
-        const <+ITYPE+> *in = (const <+ITYPE+> *) input_items[0];
-        <+OTYPE+> *out = (<+OTYPE+> *) output_items[0];
+        const char *in = (const char *) input_items[0];
+        char *out = (char *) output_items[0];
 
         // Do <+signal processing+>
 
