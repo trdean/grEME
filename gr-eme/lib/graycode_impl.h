@@ -18,6 +18,9 @@
  * Boston, MA 02110-1301, USA.
  */
 
+#define ENCODE 1
+#define DECODE 0
+
 #ifndef INCLUDED_EME_GRAYCODE_IMPL_H
 #define INCLUDED_EME_GRAYCODE_IMPL_H
 
@@ -29,7 +32,7 @@ namespace gr {
     class graycode_impl : public graycode
     {
      private:
-      // Nothing to declare in this block.
+      int d_direction;
 
      public:
       graycode_impl(int direction);

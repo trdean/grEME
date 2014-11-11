@@ -47,7 +47,6 @@ namespace gr {
       d_direction(direction)
     {
         if (d_direction != DECODE && d_direction != ENCODE)  {
-            printf("%d\n", d_direction);
             throw std::invalid_argument("eme::interleave::direction");
         }
 

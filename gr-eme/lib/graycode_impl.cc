@@ -18,6 +18,8 @@
  * Boston, MA 02110-1301, USA.
  */
 
+#include <stdio.h>
+
 #ifdef HAVE_CONFIG_H
 #include "config.h"
 #endif
@@ -41,8 +43,13 @@ namespace gr {
     graycode_impl::graycode_impl(int direction)
       : gr::sync_block("graycode",
               gr::io_signature::make(1, 1, sizeof(char)),
-              gr::io_signature::make(1, 1, sizeof(char)))
-    {}
+              gr::io_signature::make(1, 1, sizeof(char))),
+              d_direction(direction)
+    {
+        if (d_direction != DECODE && d_direction != ENCODE)  {
+            throw std::invalid_argument("eme::interleave::direction");
+        }
+    }
 
     /*
      * Our virtual destructor.
@@ -56,11 +63,29 @@ namespace gr {
 			  gr_vector_const_void_star &input_items,
 			  gr_vector_void_star &output_items)
     {
-        const char *in = (const char *) input_items[0];
-        char *out = (char *) output_items[0];
+        unsigned char symbol, shift, tmp;
 
-        // Do <+signal processing+>
+        const unsigned char *in = (const unsigned char *) input_items[0];
+        char unsigned *out = (unsigned char *) output_items[0];
 
+        for ( int i = 0; i < noutput_items; i++ ) {            
+            // Do <+signal processing+>
+            if (d_direction == ENCODE) {
+                out[i] = in[i] ^ (in[i] >> 1);
+            } else if (d_direction == DECODE) {
+                	symbol = in[i];
+
+			shift = 1;
+		        tmp = (symbol >> shift);
+			while (tmp > 0) {
+				symbol ^= tmp;
+				shift = shift << 1;
+				tmp = symbol >> shift;
+			}
+			
+			out[i] = symbol;
+            }
+        }
         // Tell runtime system how many output items we produced.
         return noutput_items;
     }

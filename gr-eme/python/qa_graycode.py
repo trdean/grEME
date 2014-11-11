@@ -31,10 +31,27 @@ class qa_graycode (gr_unittest.TestCase):
     def tearDown (self):
         self.tb = None
 
-    def test_001_t (self):
-        # set up fg
+    def test_01 (self):
+        data = tuple([i for i in range(256)])
+        src = blocks.vector_source_b(data, repeat=False, vlen=1)
+        encode = eme.graycode(1)
+        decode = eme.graycode(0)
+        intblock = blocks.vector_sink_b()
+        dst = blocks.vector_sink_b()
+
+        self.tb.connect(src, encode)
+        self.tb.connect(encode, intblock)
+        self.tb.connect(encode,decode)
+        self.tb.connect(decode, dst)
+
         self.tb.run ()
-        # check data
+        
+        enc_data = intblock.data()
+        result = dst.data()
+
+        #print(enc_data)
+        #print(result)
+        self.assertEqual(data, result)
 
 
 if __name__ == '__main__':
