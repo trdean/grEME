@@ -41,3 +41,8 @@ include(GrTest)
 
 set(GR_TEST_TARGET_DEPS gnuradio-eme)
 set(GR_TEST_PYTHON_DIRS ${CMAKE_BINARY_DIR}/swig)
+GR_ADD_TEST(qa_rs_encode_cc ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/qa_rs_encode_cc.py)
+GR_ADD_TEST(qa_interleave ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/qa_interleave.py)
+GR_ADD_TEST(qa_graycode ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/qa_graycode.py)
+GR_ADD_TEST(qa_add_sync ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/qa_add_sync.py)
+GR_ADD_TEST(qa_fsk_modulate ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/qa_fsk_modulate.py)

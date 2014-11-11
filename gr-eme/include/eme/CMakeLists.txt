@@ -22,5 +22,9 @@
 ########################################################################
 install(FILES
     api.h
-    DESTINATION include/eme
+    rs_encode_cc.h
+    interleave.h
+    graycode.h
+    add_sync.h
+    fsk_modulate.h DESTINATION include/eme
 )

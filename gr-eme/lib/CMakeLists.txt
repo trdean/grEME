@@ -26,6 +26,11 @@ include_directories(${Boost_INCLUDE_DIR})
 link_directories(${Boost_LIBRARY_DIRS})
 
 list(APPEND eme_sources
+    rs_encode_cc_impl.cc
+    interleave_impl.cc
+    graycode_impl.cc
+    add_sync_impl.cc
+    fsk_modulate_impl.cc
 )
 
 add_library(gnuradio-eme SHARED ${eme_sources})
