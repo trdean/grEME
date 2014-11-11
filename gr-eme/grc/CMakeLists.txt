@@ -22,12 +22,13 @@ install(FILES
     eme_decode_rs_int.xml
     eme_interleave_ii.xml
     eme_graycode_ii.xml
-    eme_fsk_modulate_if.xml
     eme_add_sync_ii.xml
     eme_deinterleave_ii.xml
     eme_ungraycode_ii.xml
     eme_packet_no_rs_source.xml
     eme_packet_rs_source.xml
     eme_packet_no_rs_sink.xml
-    eme_packet_rs_sink.xml DESTINATION share/gnuradio/grc/blocks
+    eme_packet_rs_sink.xml
+    eme_fsk_modulate_if.xml
+    eme_packet_sync_sink.xml DESTINATION share/gnuradio/grc/blocks
 )

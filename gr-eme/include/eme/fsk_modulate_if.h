@@ -23,7 +23,7 @@
 #define INCLUDED_EME_FSK_MODULATE_IF_H
 
 #include <eme/api.h>
-#include <gnuradio/block.h>
+#include <gnuradio/sync_interpolator.h>
 
 namespace gr {
   namespace eme {
@@ -33,7 +33,7 @@ namespace gr {
      * \ingroup eme
      *
      */
-    class EME_API fsk_modulate_if : virtual public gr::block
+    class EME_API fsk_modulate_if : virtual public gr::sync_interpolator
     {
      public:
       typedef boost::shared_ptr<fsk_modulate_if> sptr;

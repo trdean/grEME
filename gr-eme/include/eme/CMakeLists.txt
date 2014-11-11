@@ -27,12 +27,13 @@ install(FILES
     decode_rs_int.h
     interleave_ii.h
     graycode_ii.h
-    fsk_modulate_if.h
     add_sync_ii.h
     deinterleave_ii.h
     ungraycode_ii.h
     packet_no_rs_source.h
     packet_rs_source.h
     packet_no_rs_sink.h
-    packet_rs_sink.h DESTINATION include/eme
+    packet_rs_sink.h
+    fsk_modulate_if.h
+    packet_sync_sink.h DESTINATION include/eme
 )

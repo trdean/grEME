@@ -19,20 +19,38 @@
  */
 
 
-#include <gnuradio/attributes.h>
-#include <cppunit/TestAssert.h>
-#include "qa_fsk_modulate_if.h"
-#include <eme/fsk_modulate_if.h>
+#ifndef INCLUDED_EME_PACKET_SYNC_SINK_H
+#define INCLUDED_EME_PACKET_SYNC_SINK_H
+
+#include <eme/api.h>
+#include <gnuradio/sync_block.h>
 
 namespace gr {
   namespace eme {
 
-    void
-    qa_fsk_modulate_if::t1()
+    /*!
+     * \brief <+description of block+>
+     * \ingroup eme
+     *
+     */
+    class EME_API packet_sync_sink : virtual public gr::sync_block
     {
-        // Put test here
-    }
+     public:
+      typedef boost::shared_ptr<packet_sync_sink> sptr;
 
-  } /* namespace eme */
-} /* namespace gr */
+      /*!
+       * \brief Return a shared_ptr to a new instance of eme::packet_sync_sink.
+       *
+       * To avoid accidental use of raw pointers, eme::packet_sync_sink's
+       * constructor is in a private implementation
+       * class. eme::packet_sync_sink::make is the public interface for
+       * creating new instances.
+       */
+      static sptr make();
+    };
+
+  } // namespace eme
+} // namespace gr
+
+#endif /* INCLUDED_EME_PACKET_SYNC_SINK_H */
 

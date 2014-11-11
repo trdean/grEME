@@ -24,9 +24,9 @@
 
 #include <gnuradio/io_signature.h>
 #include <eme/types.h>
-#include <cstdio>
+#include <math.h>
 #include "fsk_modulate_if_impl.h"
-#define PI 3.141592653589
+#define PI 3.14159265
 
 namespace gr {
   namespace eme {
@@ -42,10 +42,10 @@ namespace gr {
      * The private constructor
      */
     fsk_modulate_if_impl::fsk_modulate_if_impl()
-      : gr::sync_interpolator("fsk_modulate_if",
+      : sync_interpolator("fsk_modulate_if",
               gr::io_signature::make(1, 1, sizeof(eme_packet_with_sync)),
-              gr::io_signature::make(1, 1, sizeof(float)),
-	      63*4096) //63 packets/sym * 4096 samples per sym
+              gr::io_signature::make(1, 1, sizeof(float),
+	      63*4096)  //63 symbols per packet * 4096 samples per symbol
     {}
 
     /*
@@ -55,39 +55,46 @@ namespace gr {
     {
     }
 
-    int
-    fsk_modulate_if_impl::work(int noutput_items,
-			  gr_vector_const_void_star &input_items,
-			  gr_vector_void_star &output_items)
+/*
+    void
+    fsk_modulate_if_impl::forecast (int noutput_items, gr_vector_int &ninput_items_required)
+    {
+        ninput_items_required[0] = noutput_items / (4096*126);  //This is probably not going to work
+    }
+*/
 
+    int
+    fsk_modulate_if_impl::work (int noutput_items,
+                       gr_vector_int &ninput_items,
+                       gr_vector_const_void_star &input_items,
+                       gr_vector_void_star &output_items)
     {
         const eme_packet_rs_encoded *in = (const eme_packet_rs_encoded *) input_items[0];
         float *out = (float *) output_items[0];
 
         // Do <+signal processing+>
-        int symbol_index;
-        int input_index;
-        float phase;
-        float freq;
-        float sample_rate = 11025;
-        for( int i = 0; i < noutput_items; i++ ) {
-                symbol_index = i % 2048;
-                if (symbol_index > 125) {
-                        symbol_index = (symbol_index / 2) + 126;
-                }
-                input_index = i % (4096*126);
-
-                if ( in[ input_index ].data[symbol_index] == 0 && symbol_index < 126 ) {
-                        out[i] = 0;
-                } else {
-                        while ( phase > 2*PI ) {
-                                phase -= 2*PI;
-                        }
-                        freq = (1270.5 + 2.6917 * in[ input_index ].data[symbol_index]);
-                        phase += 2 * PI * freq / sample_rate;
-                        out[i] = sin (phase);
-                }
-        }
+	int symbol_index;
+	int input_index;
+	float phase;
+	float freq;
+	float sample_rate = 11025;
+	for( int i = 0; i < noutput_items; i++ ) {
+		symbol_index = i / 2048;
+		if (symbol_index > 125) {
+			symbol_index = (symbol_index / 2) + 126;
+		}
+		input_index = i / (4096*126);
+		if ( in[ input_index ].data[symbol_index] == 0 ) {
+			out[i] = 0;
+		} else {
+			while ( phase > 2*PI ) {
+				phase -= 2*PI;
+			}
+			freq = (1270.5 + 2.6917 * in[ input_index ].data[symbol_index]);
+			phase += 2 * PI * freq / sample_rate;
+			out[i] = sin (phase);
+		}
+	}
         // Tell runtime system how many input items we consumed on
         // each input stream.
         consume_each (noutput_items);

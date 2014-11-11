@@ -18,29 +18,31 @@
  * Boston, MA 02110-1301, USA.
  */
 
+#ifndef INCLUDED_EME_PACKET_SYNC_SINK_IMPL_H
+#define INCLUDED_EME_PACKET_SYNC_SINK_IMPL_H
 
-#ifndef _QA_FSK_MODULATE_IF_H_
-#define _QA_FSK_MODULATE_IF_H_
-
-#include <cppunit/extensions/HelperMacros.h>
-#include <cppunit/TestCase.h>
+#include <eme/packet_sync_sink.h>
 
 namespace gr {
   namespace eme {
 
-    class qa_fsk_modulate_if : public CppUnit::TestCase
+    class packet_sync_sink_impl : public packet_sync_sink
     {
-    public:
-      CPPUNIT_TEST_SUITE(qa_fsk_modulate_if);
-      CPPUNIT_TEST(t1);
-      CPPUNIT_TEST_SUITE_END();
+     private:
+      // Nothing to declare in this block.
 
-    private:
-      void t1();
+     public:
+      packet_sync_sink_impl();
+      ~packet_sync_sink_impl();
+
+      // Where all the action really happens
+      int work(int noutput_items,
+	       gr_vector_const_void_star &input_items,
+	       gr_vector_void_star &output_items);
     };
 
-  } /* namespace eme */
-} /* namespace gr */
+  } // namespace eme
+} // namespace gr
 
-#endif /* _QA_FSK_MODULATE_IF_H_ */
+#endif /* INCLUDED_EME_PACKET_SYNC_SINK_IMPL_H */
 
