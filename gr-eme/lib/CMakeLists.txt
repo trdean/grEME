@@ -26,7 +26,6 @@ include_directories(${Boost_INCLUDE_DIR})
 link_directories(${Boost_LIBRARY_DIRS})
 
 list(APPEND eme_sources
-    source_code_ss_impl.cc
 )
 
 add_library(gnuradio-eme SHARED ${eme_sources})
@@ -52,7 +51,6 @@ include_directories(${CPPUNIT_INCLUDE_DIRS})
 list(APPEND test_eme_sources
     ${CMAKE_CURRENT_SOURCE_DIR}/test_eme.cc
     ${CMAKE_CURRENT_SOURCE_DIR}/qa_eme.cc
-    ${CMAKE_CURRENT_SOURCE_DIR}/qa_source_code_ss.cc
 )
 
 add_executable(test-eme ${test_eme_sources})

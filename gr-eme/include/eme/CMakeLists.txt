@@ -22,5 +22,5 @@
 ########################################################################
 install(FILES
     api.h
-    source_code_ss.h DESTINATION include/eme
+    DESTINATION include/eme
 )

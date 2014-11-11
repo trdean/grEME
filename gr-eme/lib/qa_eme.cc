@@ -26,13 +26,11 @@
  */
 
 #include "qa_eme.h"
-#include "qa_source_code_ss.h"
 
 CppUnit::TestSuite *
 qa_eme::suite()
 {
   CppUnit::TestSuite *s = new CppUnit::TestSuite("eme");
-  s->addTest(gr::eme::qa_source_code_ss::suite());
 
   return s;
 }
