@@ -31,11 +31,21 @@ class qa_interleave (gr_unittest.TestCase):
     def tearDown (self):
         self.tb = None
 
-    def test_001_t (self):
-        # set up fg
+    def test_01 (self):
+        data = tuple([i for i in range(63)])
+        src = blocks.vector_source_b (data,repeat=False,vlen=63)
+        interleaver = eme.interleave(1)
+        deinterleaver = eme.interleave(0)
+        dst = blocks.vector_sink_b(vlen=63)
+        self.tb.connect(src, interleaver)
+        #self.tb.connect(interleaver, dst)
+        self.tb.connect(interleaver, deinterleaver)
+        self.tb.connect(deinterleaver, dst)
+        
         self.tb.run ()
-        # check data
 
+        result = dst.data()
+        self.assertEqual(data, result)
 
 if __name__ == '__main__':
     gr_unittest.run(qa_interleave, "qa_interleave.xml")

@@ -21,6 +21,9 @@
 #ifndef INCLUDED_EME_INTERLEAVE_IMPL_H
 #define INCLUDED_EME_INTERLEAVE_IMPL_H
 
+#define ENCODE 1
+#define DECODE 0
+
 #include <eme/interleave.h>
 
 namespace gr {
@@ -29,7 +32,7 @@ namespace gr {
     class interleave_impl : public interleave
     {
      private:
-      // Nothing to declare in this block.
+      int d_direction;     
 
      public:
       interleave_impl(int direction);
